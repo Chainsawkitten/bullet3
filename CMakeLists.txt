@@ -25,7 +25,6 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG")
 
 OPTION(USE_DOUBLE_PRECISION "Use double precision"	OFF)
 OPTION(USE_GRAPHICAL_BENCHMARK "Use Graphical Benchmark" ON)
-OPTION(BUILD_SHARED_LIBS "Use shared libraries" OFF)
 OPTION(USE_SOFT_BODY_MULTI_BODY_DYNAMICS_WORLD "Use btSoftMultiBodyDynamicsWorld" OFF)
 
 OPTION(BULLET2_USE_THREAD_LOCKS "Build Bullet 2 libraries with mutex locking around certain operations (required for multi-threading)" OFF)
@@ -344,12 +343,6 @@ IF(BUILD_PYBULLET)
 			message("NumPy not found")
 		endif()
 	ENDIF()
-
-	IF(WIN32)
-		SET(BUILD_SHARED_LIBS OFF CACHE BOOL "Shared Libs" FORCE)
-	ELSE(WIN32)
-		SET(BUILD_SHARED_LIBS ON CACHE BOOL "Shared Libs" FORCE)
-	ENDIF(WIN32)
 
 	IF(APPLE)
 		OPTION(BUILD_PYBULLET_MAC_USE_PYTHON_FRAMEWORK "Set when you want to use the Python Framework on Mac" ON)
