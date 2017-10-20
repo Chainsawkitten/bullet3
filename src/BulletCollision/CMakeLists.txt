@@ -251,12 +251,16 @@ SET(BulletCollision_HDRS
 )
 
 
-ADD_LIBRARY(BulletCollision ${BulletCollision_SRCS} ${BulletCollision_HDRS})
+IF (WIN32)
+	ADD_LIBRARY(BulletCollision STATIC ${BulletCollision_SRCS} ${BulletCollision_HDRS})
+ELSE()
+	ADD_LIBRARY(BulletCollision ${BulletCollision_SRCS} ${BulletCollision_HDRS})
+	IF (BUILD_SHARED_LIBS)
+	  TARGET_LINK_LIBRARIES(BulletCollision LinearMath)
+	ENDIF (BUILD_SHARED_LIBS)
+ENDIF()
 SET_TARGET_PROPERTIES(BulletCollision PROPERTIES VERSION ${BULLET_VERSION})
 SET_TARGET_PROPERTIES(BulletCollision PROPERTIES SOVERSION ${BULLET_VERSION})
-IF (BUILD_SHARED_LIBS)
-  TARGET_LINK_LIBRARIES(BulletCollision LinearMath)
-ENDIF (BUILD_SHARED_LIBS)
 
 
 IF (INSTALL_LIBS)

@@ -46,7 +46,11 @@ SET(LinearMath_HDRS
 	btVector3.h
 )
 
-ADD_LIBRARY(LinearMath ${LinearMath_SRCS} ${LinearMath_HDRS})
+IF (WIN32)
+	ADD_LIBRARY(LinearMath STATIC ${LinearMath_SRCS} ${LinearMath_HDRS})
+ELSE()
+	ADD_LIBRARY(LinearMath ${LinearMath_SRCS} ${LinearMath_HDRS})
+ENDIF()
 SET_TARGET_PROPERTIES(LinearMath PROPERTIES VERSION ${BULLET_VERSION})
 SET_TARGET_PROPERTIES(LinearMath PROPERTIES SOVERSION ${BULLET_VERSION})
 

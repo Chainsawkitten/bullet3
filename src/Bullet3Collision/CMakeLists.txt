@@ -57,10 +57,14 @@ SET(Bullet3Collision_HDRS
 	${Bullet3CollisionNarrowPhase_HDRS}
 )
 
-ADD_LIBRARY(Bullet3Collision ${Bullet3Collision_SRCS} ${Bullet3Collision_HDRS})
-if (BUILD_SHARED_LIBS)
-  target_link_libraries(Bullet3Collision Bullet3Geometry)
-endif ()
+IF (WIN32)
+	ADD_LIBRARY(Bullet3Collision STATIC ${Bullet3Collision_SRCS} ${Bullet3Collision_HDRS})
+ELSE()
+	ADD_LIBRARY(Bullet3Collision ${Bullet3Collision_SRCS} ${Bullet3Collision_HDRS})
+	if (BUILD_SHARED_LIBS)
+	  target_link_libraries(Bullet3Collision Bullet3Geometry)
+	endif ()
+ENDIF()
 SET_TARGET_PROPERTIES(Bullet3Collision PROPERTIES VERSION ${BULLET_VERSION})
 SET_TARGET_PROPERTIES(Bullet3Collision PROPERTIES SOVERSION ${BULLET_VERSION})
 

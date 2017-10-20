@@ -29,12 +29,16 @@ SET(BulletInverseDynamics_HDRS
 )
 
 
-ADD_LIBRARY(BulletInverseDynamics ${BulletInverseDynamics_SRCS} ${BulletInverseDynamics_HDRS})
+IF (WIN32)
+	ADD_LIBRARY(BulletInverseDynamics STATIC ${BulletInverseDynamics_SRCS} ${BulletInverseDynamics_HDRS})
+ELSE()
+	ADD_LIBRARY(BulletInverseDynamics ${BulletInverseDynamics_SRCS} ${BulletInverseDynamics_HDRS})
+	IF (BUILD_SHARED_LIBS)
+	  TARGET_LINK_LIBRARIES(BulletInverseDynamics Bullet3Common LinearMath)
+	ENDIF (BUILD_SHARED_LIBS)
+ENDIF()
 SET_TARGET_PROPERTIES(BulletInverseDynamics PROPERTIES VERSION ${BULLET_VERSION})
 SET_TARGET_PROPERTIES(BulletInverseDynamics PROPERTIES SOVERSION ${BULLET_VERSION})
-IF (BUILD_SHARED_LIBS)
-  TARGET_LINK_LIBRARIES(BulletInverseDynamics Bullet3Common LinearMath)
-ENDIF (BUILD_SHARED_LIBS)
 
 
 IF (INSTALL_LIBS)
